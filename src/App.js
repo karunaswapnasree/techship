@@ -11,9 +11,11 @@ export default function App() {
   const [itemsSelected, setItemsSelected] = useState(JSON.parse(sessionStorage.getItem("selectedItems")) || []);
 
   const setSelection = (index) => {
-    const setSelectedItems = [...itemsSelected, index]
-    sessionStorage.setItem("selectedItems", JSON.stringify(setSelectedItems))
-    setItemsSelected(setSelectedItems)
+    if (!itemsSelected.includes(index)) {
+      const setSelectedItems = [...itemsSelected, index]
+      sessionStorage.setItem("selectedItems", JSON.stringify(setSelectedItems))
+      setItemsSelected(setSelectedItems)
+    }
   }
 
   useEffect(() => {
@@ -28,18 +30,17 @@ export default function App() {
           throw Error(res.statusText);
         }
         return res.json();
-      })
-        .then(
-          (result) => {
-            setIsLoaded(true)
-            setItems(result.items)
-            sessionStorage.setItem("pageNumber", num);
-          },
-          (error) => {
-            setIsLoaded(true);
-            setError("You have Exceeded the search limits. Please Close the browser and try again.");
-          }
-        )
+      }).then(
+        (result) => {
+          setIsLoaded(true)
+          setItems(result.items)
+          sessionStorage.setItem("pageNumber", num);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError("You have Exceeded the search limits. Please Close the browser and try again.");
+        }
+      )
     }
     fetchData(page)
   }, [page])
