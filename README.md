@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+I managed to complete the technical assessment using only create-react-app without using any additional npm packages.
+I have implemented the session storage concept as a temporary Data storage.
+
 ## Available Scripts
 
 In the project directory, you can run:
